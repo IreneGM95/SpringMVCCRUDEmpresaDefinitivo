@@ -1,4 +1,5 @@
-package com.example.SpringMVCCRUDEmpresaDefinitivo;
+package com.example;
+
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -19,7 +20,7 @@ import com.example.services.DepartamentoService;
 import com.example.services.TelefonoService;
 
 @SpringBootApplication
-public class SpringMvccrudEmpresaDefinitivoApplication implements CommandLineRunner {
+public class App implements CommandLineRunner {
 
 	@Autowired
 	private DepartamentoService departamentoService;
@@ -34,7 +35,7 @@ public class SpringMvccrudEmpresaDefinitivoApplication implements CommandLineRun
 	private CorreoService correoService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringMvccrudEmpresaDefinitivoApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
 
 	@Override
