@@ -30,7 +30,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Override
     @Transactional
     public void save(Departamento departamento) {
-        departamentoDao.save(Departamento);
+        departamentoDao.save(departamento);
     }
 
     @Override

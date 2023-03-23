@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dao.correoDao;
+import com.example.dao.CorreoDao;
 import com.example.entities.Empleado;
 import com.example.entities.Correo;
 
