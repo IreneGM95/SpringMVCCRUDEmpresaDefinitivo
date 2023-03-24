@@ -69,7 +69,7 @@ public class MainController {
     }
 
 /**Metodo: */
-@GetMapping("/frmAltaEst") // aqui es el nombre de la url que va a resoponder y le damos el nombre que quieras no tiene porq ser igual que el nombre de abajo 
+@GetMapping("/frmAltaEmp") // aqui es el nombre de la url que va a resoponder y le damos el nombre que quieras no tiene porq ser igual que el nombre de abajo 
      public String formularioAltaEmpleado(Model model){
 
 
@@ -176,7 +176,7 @@ public class MainController {
                 .collect(Collectors.joining(";"));
 
         model.addAttribute("empleado", empleado);
-        model.addAttribute("telefonos", telefonosEmpleado);
+        model.addAttribute("telefonos", numerosDeTelefono);
 
         // Igual para correos:
 
@@ -190,7 +190,7 @@ public class MainController {
         String emailsDecorreo = correosEmpleado.stream().map(t -> t.getEmail())
                 .collect(Collectors.joining(";"));
 
-        model.addAttribute("correos", correosEmpleado);
+        model.addAttribute("correos", emailsDecorreo);
 
         // Para que en el formulario nos deje modificar/visualizar la departamento de un
         // empleado ya creado:
