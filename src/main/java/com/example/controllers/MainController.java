@@ -73,6 +73,7 @@ public class MainController {
      * se muestre el último creado
      */
     @PostMapping("/altaModificacionEmpleado")
+
     public String altaEmpleado(@ModelAttribute Empleado empleado,
             @RequestParam(name = "numerosTelefonos") String telefonosRecibidos) {
 
@@ -117,8 +118,7 @@ public class MainController {
 
     // Igual para los correos:
     @PostMapping("/altaModificacionEmpleado")
-    public String altaEmpleado(@ModelAttribute Empleado empleado,
-            @RequestParam(name = "mailsCorreos") String correosRecibidos) {
+       public String altaEmpleado(@ModelAttribute Empleado empleado, @RequestParam(name = "emailsCorreos") String correosRecibidos) {
 
         LOG.info("correos recibidos: " + correosRecibidos);
 
