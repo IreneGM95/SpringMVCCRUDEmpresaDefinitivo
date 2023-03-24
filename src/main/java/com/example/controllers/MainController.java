@@ -68,6 +68,20 @@ public class MainController {
         return mav;
     }
 
+/**Metodo: */
+@GetMapping("/frmAltaEst") // aqui es el nombre de la url que va a resoponder y le damos el nombre que quieras no tiene porq ser igual que el nombre de abajo 
+     public String formularioAltaEmpleado(Model model){
+
+
+     List<Departamento> departamentos = departamentoService.findAll();
+     Empleado empleado = new Empleado();
+
+        model.addAttribute("empleado",empleado);
+        model.addAttribute("departamentos", departamentos);
+
+        return "views/FormularioAltaEmpleado";
+
+     }
     /**
      * Metodo que recibe los datos procedentes de los controladores del formulario y
      * se muestre el último creado
