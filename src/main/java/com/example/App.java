@@ -83,5 +83,40 @@ public class App implements CommandLineRunner {
 				.email("@hotmail")
 				.empleado(empleadoService.findById(1))
 				.build());
+
+				//Segundo empleado
+				empleadoService.save(Empleado.builder()
+				.id(2) // hay que meterle el id o no funciona
+				.nombre("Elena")
+				.apellidos("Fernandez")
+				.fechaAlta(LocalDate.of(2008, Month.APRIL, 2))
+				.genero(Genero.MUJER)
+
+				.departamento(departamentoService.findById(1))
+				.build());
+
+		telefonoService.save(Telefono.builder()
+				.id(1)
+				.numero("telempl2")
+				.empleado(empleadoService.findById(2))
+				.build());
+
+		telefonoService.save(Telefono.builder()
+				.id(2)
+				.numero("telempl2,2")
+				.empleado(empleadoService.findById(2))
+				.build());
+
+		correoService.save(Correo.builder()
+				.id(1)
+				.email("@gmail2")
+				.empleado(empleadoService.findById(2))
+				.build());
+
+				correoService.save(Correo.builder()
+				.id(2)
+				.email("@hotmail2")
+				.empleado(empleadoService.findById(2))
+				.build());
 	}
 }
