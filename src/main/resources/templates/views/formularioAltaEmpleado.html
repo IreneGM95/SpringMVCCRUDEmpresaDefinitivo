@@ -53,12 +53,12 @@
         <!-- primera opción en blanco -->
         <!-- <option value="1">Informatica</option>  <option value="2">Biología</option> -->
 
-        <!-- Pero no se introduce cualquier departamento, sino que utilizamos un desplegable que muestre las departamentoes creadas -->
+        <!-- Pero no se introduce cualquier departamento, sino que utilizamos un desplegable que muestre las departamentos creadas -->
         <!-- es necesario acceder a la departamento atraves del controller -->
         <select name="departamento" id="idDepartamento" >
             <option></option>
             <!-- primera opción en blanco -->
-            <option th:each="departamento : ${departamentoes}" 
+            <option th:each="departamento : ${departamentos}" 
             th:value="${departamento.id}" th:text="${departamento.nombre}"
                 th:selected="${empleado.departamento != null and departamento.id == empleado.departamento.id}"></option>
             <!-- saca una departamento de cada iteración y se obtiene el id como valor que enviar al servidor -->
