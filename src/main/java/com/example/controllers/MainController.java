@@ -1,11 +1,9 @@
 package com.example.controllers;
 
-import java.lang.ProcessBuilder.Redirect;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.entities.Empleado;
 import com.example.entities.Correo;
@@ -68,20 +65,21 @@ public class MainController {
         return mav;
     }
 
-/**Metodo: */
-@GetMapping("/frmAltaEmp") // aqui es el nombre de la url que va a resoponder y le damos el nombre que quieras no tiene porq ser igual que el nombre de abajo 
-     public String formularioAltaEmpleado(Model model){
+    /** Metodo: */
+    @GetMapping("/frmAltaEmp") // aqui es el nombre de la url que va a resoponder y le damos el nombre que
+                                    // quieras no tiene porq ser igual que el nombre de abajo
+    public String formularioAltaEmpleado(Model model) {
 
+        List<Departamento> departamentos = departamentoService.findAll();
+        Empleado empleado = new Empleado();
 
-     List<Departamento> departamentos = departamentoService.findAll();
-     Empleado empleado = new Empleado();
-
-        model.addAttribute("empleado",empleado);
+        model.addAttribute("empleado", empleado);
         model.addAttribute("departamentos", departamentos);
 
-        return "views/FormularioAltaEmpleado";
+        return "views/formularioAltaEmpleado";
 
-     }
+    }
+
     /**
      * Metodo que recibe los datos procedentes de los controladores del formulario y
      * se muestre el último creado
@@ -89,9 +87,9 @@ public class MainController {
     @PostMapping("/altaModificacionEmpleado")
 
     public String altaEmpleado(@ModelAttribute Empleado empleado,
-            @RequestParam(name = "numerosTelefonos") String telefonosRecibidos,  @RequestParam(name = "emailsCorreos") String correosRecibidos) {
+            @RequestParam(name = "numerosTelefonos") String telefonosRecibidos,
+            @RequestParam(name = "emailsCorreos") String correosRecibidos) {
 
-               
         // gracias al log nos da un mensaje de comprobación antes de procesar la
         // información. Es una buena práctica de programación hacer esta comprobación
         // previa
