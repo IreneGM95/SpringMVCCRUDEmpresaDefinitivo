@@ -75,8 +75,9 @@ public class MainController {
     @PostMapping("/altaModificacionEmpleado")
 
     public String altaEmpleado(@ModelAttribute Empleado empleado,
-            @RequestParam(name = "numerosTelefonos") String telefonosRecibidos) {
+            @RequestParam(name = "numerosTelefonos") String telefonosRecibidos,  @RequestParam(name = "emailsCorreos") String correosRecibidos) {
 
+               
         // gracias al log nos da un mensaje de comprobación antes de procesar la
         // información. Es una buena práctica de programación hacer esta comprobación
         // previa
@@ -110,37 +111,29 @@ public class MainController {
 
                 telefonoService.save(telefonoObject);
             });
+            LOG.info("correos recibidos: " + correosRecibidos);
 
-        }
+            empleadoService.save(empleado);
 
-        return "redirect:/listarEmp";
-    }
+            List<String> listadoMailsCorreo = null;
+            if (correosRecibidos != null) {
+                String[] arrayCorreos = correosRecibidos.split(";");
 
-    // Igual para los correos:
-    @PostMapping("/altaModificacionEmpleado")
-       public String altaEmpleado(@ModelAttribute Empleado empleado, @RequestParam(name = "emailsCorreos") String correosRecibidos) {
+                listadoMailsCorreo = Arrays.asList(arrayCorreos);
+            }
 
-        LOG.info("correos recibidos: " + correosRecibidos);
+            if (listadoMailsCorreo != null) {
+                correoService.deleteByEmpleado(empleado);
+                listadoMailsCorreo.stream().forEach(n -> {
+                    Correo correoObject = Correo.builder()
+                            .email(n)
+                            .empleado(empleado)
+                            .build();
 
-        empleadoService.save(empleado);
+                    correoService.save(correoObject);
+                });
 
-        List<String> listadoMailsCorreo = null;
-        if (correosRecibidos != null) {
-            String[] arrayCorreos = correosRecibidos.split(";");
-
-            listadoMailsCorreo = Arrays.asList(arrayCorreos);
-        }
-
-        if (listadoMailsCorreo != null) {
-            correoService.deleteByEmpleado(empleado);
-            listadoMailsCorreo.stream().forEach(n -> {
-                Correo correoObject = Correo.builder()
-                        .email(n)
-                        .empleado(empleado)
-                        .build();
-
-                correoService.save(correoObject);
-            });
+            }
 
         }
 
