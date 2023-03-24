@@ -185,10 +185,10 @@ public class MainController {
                 .filter(correo -> correo.getEmpleado().getId() == idEmpleado)
                 .collect(Collectors.toList());
 
-        String emailsDecorreo = correosEmpleado.stream().map(t -> t.getEmail())
+        String emailsDeCorreo = correosEmpleado.stream().map(t -> t.getEmail())
                 .collect(Collectors.joining(";"));
 
-        model.addAttribute("correos", emailsDecorreo);
+        model.addAttribute("correos", emailsDeCorreo);
 
         // Para que en el formulario nos deje modificar/visualizar la departamento de un
         // empleado ya creado:
@@ -197,6 +197,7 @@ public class MainController {
 
         return "views/formularioAltaEmpleado";
     }
+
 
     @GetMapping("/borrar/{id}")
     public String borrarEmpleado(@PathVariable(name = "id") int idEmpleado) {

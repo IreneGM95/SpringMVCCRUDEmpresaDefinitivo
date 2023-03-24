@@ -31,7 +31,18 @@ public class Departamento implements Serializable {
     private int id;
     private String nombre;
 
-    @OneToMany(fetch = FetchType.EAGER, 
+    @OneToMany(fetch = FetchType.LAZY, 
        cascade = CascadeType.PERSIST, mappedBy = "departamento")
     private List<Empleado> empleados;
+
+    // @OneToMany(fetch = FetchType.EAGER, 
+    //    cascade = CascadeType.PERSIST, mappedBy = "departamento")
+    // private List<Empleado> empleados;
+    
+    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "empleado")
+    // private List<Telefono> telefonos;
+
+
+    
+
 }
