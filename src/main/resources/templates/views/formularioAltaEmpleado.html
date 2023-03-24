@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Formulario de alta/modificación de empleado</h1>
+    <form th:object="${empleado}" th:action="@{/altaModificacionEmpleado}" method="post">
+
+        <!-- Guardar en un input oculto el id del empleado: -->
+        <input type="hidden" name="id" th:value="${empleado.id} ">
+        <!-- no hace falta evaluar el id del empleado con un ternario -->
+
+
+        <!-- Resto de campos: -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" th:field="*{nombre}" required>
+        <!-- input no necesita cierre -->
+        <!-- th:field rige qué campo se rellena, name se puede quitar -->
+        <!-- Para que no pueda ser null en el formulario, se pone required. Si no se completa, no sale de la vista y no se envia al servidor-->
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" name="apellidos" id="apellidos" th:field="*{apellidos}" required>
+
+        
+        <label for="fechaAlta">Fecha de alta:</label>
+        <input type="date" name="fechaAlta" id="fechaAlta" th:field="*{fechaAlta}">
+
+               <fieldset>
+            <!-- el genero es un enumerable, asi que usamos un radio botón para seleccionarlo -->
+            <legend>Genero</legend>
+            <label for="mujer">Mujer</label>
+            <input type="radio" id="mujer" name="genero" value="MUJER" th:field="*{genero}">
+
+            <label for="hombre">Hombre</label>
+            <input type="radio" id="hombre" name="genero" value="HOMBRE" th:field="*{genero}">
+
+            <label for="otro">Otro</label>
+            <input type="radio" id="otro" name="genero" value="OTRO" th:field="*{genero}">
+            <!-- Los radio botones han de ser mutuamente excluyentes, por eso añadimos name="gnero", esto le indica qe hacen referencia al mismo genero y cuando le metamos datos solo meta un valor -->
+        </fieldset>
+
+
+       
+        <label for="idDepartamento">departamento:</label>
+        <!-- Si lo hicieramos a mano, sería: -->
+        <!-- <select name="departamento" id="idDepartamento" required>           <option></option> -->
+        <!-- primera opción en blanco -->
+        <!-- <option value="1">Informatica</option>  <option value="2">Biología</option> -->
+
+        <!-- Pero no se introduce cualquier departamento, sino que utilizamos un desplegable que muestre las departamentoes creadas -->
+        <!-- es necesario acceder a la departamento atraves del controller -->
+        <select name="departamento" id="idDepartamento" required>
+            <option></option>
+            <!-- primera opción en blanco -->
+            <option th:each="departamento : ${departamentoes}" 
+            th:value="${departamento.id}" th:text="${departamento.nombre}"
+                th:selected="${empleado.departamento != null and departamento.id == empleado.departamento.id}"></option>
+            <!-- saca una departamento de cada iteración y se obtiene el id como valor que enviar al servidor -->
+        </select>
+
+        <label for="numerosTelefonos">Telefono(s)</label>
+        <input type="text" name="nuemerosTelefonos" id="numerosTelefonos"
+            placeholder="Uno o varios, separados por punto y coma" 
+            th:value="${telefonos}">
+        <!-- si al name lo llamamos tlefonos a secas nos daría erros -->
+
+        <!-- Igual para correos: -->
+        <label for="emailsCorreos">Correo(s)</label>
+        <input type="text" name="nuemerosTelefonos" id="emailsCorreos"
+            placeholder="Uno o varios, separados por punto y coma" 
+            th:value="${correos}">
+
+        <!-- Para enviar el formulario: -->
+        <input type="submit" value="ALTA">
+    </form>
+
+    
+</body>
+
+</html>

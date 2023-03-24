@@ -42,7 +42,7 @@ public class TelefonoServiceImpl implements TelefonoService {
     @Override
     @Transactional
     public void deleteByEmpleado(Empleado empleado) {
-        telefonoDao.deleteByEmpleado(empleado);;
+        telefonoDao.deleteByEmpleado(empleado);
     }
 
     @Override
