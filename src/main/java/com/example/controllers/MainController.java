@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.entities.Empleado;
+import com.example.entities.Correo;
 import com.example.entities.Departamento;
 import com.example.entities.Telefono;
 import com.example.services.EmpleadoService;
@@ -108,7 +109,7 @@ public class MainController {
 
                 telefonoService.save(telefonoObject);
             });
-            
+
         }
 
         return "redirect:/listarEmp";
@@ -117,34 +118,33 @@ public class MainController {
     // Igual para los correos:
     @PostMapping("/altaModificacionEmpleado")
     public String altaEmpleado(@ModelAttribute Empleado empleado,
-            @RequestParam(name = "numerosTelefonos") String telefonosRecibidos) {
+            @RequestParam(name = "mailsCorreos") String correosRecibidos) {
 
-    
-        LOG.info("Telefonos recibidos: " + telefonosRecibidos);
-      
+        LOG.info("correos recibidos: " + correosRecibidos);
+
         empleadoService.save(empleado);
 
-        List<String> listadoNumerosTelefono = null; /
-        if (telefonosRecibidos != null) {
-            String[] arrayTelefonos = telefonosRecibidos.split(";"); 
-            listadoNumerosTelefono = Arrays.asList(arrayTelefonos);
+        List<String> listadoMailsCorreo = null;
+        if (correosRecibidos != null) {
+            String[] arrayCorreos = correosRecibidos.split(";");
+
+            listadoMailsCorreo = Arrays.asList(arrayCorreos);
         }
 
-        
-        if (listadoNumerosTelefono != null) {
-            telefonoService.deleteByEmpleado(empleado);
-            listadoNumerosTelefono.stream().forEach(n -> {
-                Telefono telefonoObject = Telefono.builder()
-                        .numero(n)
+        if (listadoMailsCorreo != null) {
+            correoService.deleteByEmpleado(empleado);
+            listadoMailsCorreo.stream().forEach(n -> {
+                Correo correoObject = Correo.builder()
+                        .email(n)
                         .empleado(empleado)
                         .build();
 
-                telefonoService.save(telefonoObject);
+                correoService.save(correoObject);
             });
-            
+
         }
 
-        return "redirect:/listar";
+        return "redirect:/listarEmp";
     }
 
     /** Método para actualizar un empleado dado su id */
@@ -168,14 +168,27 @@ public class MainController {
         String numerosDeTelefono = telefonosEmpleado.stream().map(t -> t.getNumero())
                 .collect(Collectors.joining(";"));
 
-        List<departamento> departamentoes = departamentoService.findAll();
-
         model.addAttribute("empleado", empleado);
         model.addAttribute("telefonos", telefonosEmpleado);
 
+        // Igual para correos:
+
+        List<Correo> todosCorreos = correoService.findAll();
+
+        List<Correo> correosEmpleado = todosCorreos
+                .stream()
+                .filter(correo -> correo.getEmpleado().getId() == idEmpleado)
+                .collect(Collectors.toList());
+
+        String emailsDecorreo = correosEmpleado.stream().map(t -> t.getEmail())
+                .collect(Collectors.joining(";"));
+
+        model.addAttribute("correos", correosEmpleado);
+
         // Para que en el formulario nos deje modificar/visualizar la departamento de un
         // empleado ya creado:
-        model.addAttribute("departamentoes", departamentoes);
+        List<Departamento> departamentos = departamentoService.findAll();
+        model.addAttribute("departamentos", departamentos);
 
         return "views/formularioAltaEmpleado";
     }
@@ -183,7 +196,7 @@ public class MainController {
     @GetMapping("/borrar/{id}")
     public String borrarEmpleado(@PathVariable(name = "id") int idEmpleado) {
         empleadoService.delete(empleadoService.findById(idEmpleado));
-        return "redirect:/listar";
+        return "redirect:/listarEmp";
     }
 
     /**
@@ -196,7 +209,11 @@ public class MainController {
         List<Telefono> telefonos = telefonoService.findByEmpleado(empleado);
         List<String> numerosTelefono = telefonos.stream().map(t -> t.getNumero()).toList();
 
+        List<Correo> correos = correoService.findByEmpleado(empleado);
+        List<String> emailsCorreo = correos.stream().map(t -> t.getEmail()).toList();
+
         model.addAttribute("telefonos", numerosTelefono);
+        model.addAttribute("correos", emailsCorreo);
         model.addAttribute("empleado", empleado);
         return "views/detalleEmpleado";
     }
