@@ -48,8 +48,8 @@ public class App implements CommandLineRunner {
 		 * telefonos):
 		 */
 
-		departamentoService.save(Departamento.builder().nombre("Informatica").build());
-		departamentoService.save(Departamento.builder().nombre("Biologia").build());
+		departamentoService.save(Departamento.builder().nombre("IT").build());
+		departamentoService.save(Departamento.builder().nombre("RRHH").build());
 
 		empleadoService.save(Empleado.builder()
 				.id(1) // hay que meterle el id o no funciona
