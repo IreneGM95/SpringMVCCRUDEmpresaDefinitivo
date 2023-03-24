@@ -55,7 +55,7 @@
 
         <!-- Pero no se introduce cualquier departamento, sino que utilizamos un desplegable que muestre las departamentoes creadas -->
         <!-- es necesario acceder a la departamento atraves del controller -->
-        <select name="departamento" id="idDepartamento" required>
+        <select name="departamento" id="idDepartamento" >
             <option></option>
             <!-- primera opción en blanco -->
             <option th:each="departamento : ${departamentoes}" 
