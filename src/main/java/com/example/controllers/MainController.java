@@ -1,6 +1,5 @@
 package com.example.controllers;
 
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -67,7 +66,7 @@ public class MainController {
 
     /** Metodo: */
     @GetMapping("/frmAltaEmp") // aqui es el nombre de la url que va a resoponder y le damos el nombre que
-                                    // quieras no tiene porq ser igual que el nombre de abajo
+                               // quieras no tiene porq ser igual que el nombre de abajo
     public String formularioAltaEmpleado(Model model) {
 
         List<Departamento> departamentos = departamentoService.findAll();
@@ -170,11 +169,11 @@ public class MainController {
         // sería más eficiente usar una consulta de mysql, pero en este caso no lo vamos
         // a hacer pporque vamos mal de tiempo y profundizaremos en mysql mas adelante
 
-        String numerosDeTelefono = telefonosEmpleado.stream().map(t -> t.getNumero())
+        String numerosTelefono = telefonosEmpleado.stream().map(t -> t.getNumero())
                 .collect(Collectors.joining(";"));
 
         model.addAttribute("empleado", empleado);
-        model.addAttribute("telefonos", numerosDeTelefono);
+        model.addAttribute("telefonos", numerosTelefono);
 
         // Igual para correos:
 
@@ -198,7 +197,6 @@ public class MainController {
         return "views/formularioAltaEmpleado";
     }
 
-
     @GetMapping("/borrar/{id}")
     public String borrarEmpleado(@PathVariable(name = "id") int idEmpleado) {
         empleadoService.delete(empleadoService.findById(idEmpleado));
@@ -213,10 +211,10 @@ public class MainController {
 
         Empleado empleado = empleadoService.findById(id);
         List<Telefono> telefonos = telefonoService.findByEmpleado(empleado);
-        List<String> numerosTelefono = telefonos.stream().map(t -> t.getNumero()).toList();
+        String numerosTelefono = telefonos.stream().map(t -> t.getNumero()).toList();
 
         List<Correo> correos = correoService.findByEmpleado(empleado);
-        List<String> emailsCorreo = correos.stream().map(t -> t.getEmail()).toList();
+        String emailsCorreo = correos.stream().map(t -> t.getEmail()).toList();
 
         model.addAttribute("telefonos", numerosTelefono);
         model.addAttribute("correos", emailsCorreo);
