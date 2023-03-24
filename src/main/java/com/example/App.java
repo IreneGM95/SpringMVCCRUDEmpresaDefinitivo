@@ -1,6 +1,5 @@
 package com.example;
 
-
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -73,9 +72,15 @@ public class App implements CommandLineRunner {
 				.empleado(empleadoService.findById(1))
 				.build());
 
+		correoService.save(Correo.builder()
+				.id(1)
+				.email("@gmail")
+				.empleado(empleadoService.findById(1))
+				.build());
+
 				correoService.save(Correo.builder()
 				.id(2)
-				.email("8")
+				.email("@hotmail")
 				.empleado(empleadoService.findById(1))
 				.build());
 	}
