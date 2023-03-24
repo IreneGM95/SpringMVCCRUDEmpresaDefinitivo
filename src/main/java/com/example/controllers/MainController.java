@@ -211,10 +211,10 @@ public class MainController {
 
         Empleado empleado = empleadoService.findById(id);
         List<Telefono> telefonos = telefonoService.findByEmpleado(empleado);
-        String numerosTelefono = telefonos.stream().map(t -> t.getNumero()).toList();
+        List<String> numerosTelefono = telefonos.stream().map(t -> t.getNumero()).toList();
 
         List<Correo> correos = correoService.findByEmpleado(empleado);
-        String emailsCorreo = correos.stream().map(t -> t.getEmail()).toList();
+        List<String> emailsCorreo = correos.stream().map(t -> t.getEmail()).toList();
 
         model.addAttribute("telefonos", numerosTelefono);
         model.addAttribute("correos", emailsCorreo);
